@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <title>Ryhmä 24 Kojelauta</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f9; padding: 50px; }
+        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: inline-block; margin: 10px; width: 200px; }
+        h1 { color: #333; }
+        .value { font-size: 2em; font-weight: bold; color: #007BFF; }
+    </style>
+</head>
+<body>
+    <h1>Ryhmä 24 - Sensoridata (Reaaliaikainen)</h1>
+    <div class="card">
+        <h3>Lämpötila</h3>
+        <div class="value"><span id="temp">--</span> °C</div>
+    </div>
+    <div class="card">
+        <h3>Kosteus</h3>
+        <div class="value"><span id="hum">--</span> %</div>
+    </div>
+    <div class="card">
+        <h3>Huoneessa ihmisiä</h3>
+        <div class="value" id="occ" style="color: #FF5733;">--</div>
+    </div>
+
+    <script>
+        // Yhdistetään julkiseen MQTT-palvelimeen WebSocketsin yli
+        const client = mqtt.connect('wss://test.mosquitto.org:8081/mqtt');
+
+        client.on('connect', () => {
+            console.log("Yhdistetty MQTT-palvelimeen!");
+            client.subscribe('proto_assignment/group24/data');
+        });
+
+        client.on('message', (topic, message) => {
+            const data = JSON.parse(message.toString());
+            document.getElementById('temp').innerText = data.temp;
+            document.getElementById('hum').innerText = data.humidity;
+
+            if(data.occupied === true) {
+                document.getElementById('occ').innerText = "Kyllä";
+                document.getElementById('occ').style.color = "red";
+            } else {
+                document.getElementById('occ').innerText = "Ei";
+                document.getElementById('occ').style.color = "green";
+            }
+        });
+    </script>
+</body>
+</html>

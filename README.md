@@ -7,8 +7,8 @@ IoT course project for **COMP.CE.450 – Internet of Things**
 ## 👨‍💻 Group 24
 
 - Tuomas Puhakainen – https://github.com/Tuomar2  
-- Eero Kainulainen – https://github.com/  
-- Lasse Keränen – https://github.com/  
+- Eero Kainulainen – https://github.com/dfeeka
+- Lasse Keränen
 
 ---
 
@@ -26,7 +26,12 @@ The primary function of the system is to react to these changing conditions. For
 
 This project demonstrates a **concept IoT system capable of sensing, analyzing, and reacting to environmental changes in a room**.
 
----
+## Data Visualization Dashboard
+
+The prototype includes a simple web dashboard that visualizes the sensor data in real time.  
+The Raspberry Pi publishes the processed sensor data to an MQTT broker, and the dashboard subscribes to this topic to display the measurements.
+
+![Dashboard showing temperature, humidity and occupancy](docs/data-visualization.png)
 
 ## ⚙️ Features
 
@@ -36,8 +41,6 @@ This project demonstrates a **concept IoT system capable of sensing, analyzing, 
 - ☁️ MQTT data publishing
 - 🌐 HTTP web dashboard visualization
 - 🚨 Discord webhook alerts
-
----
 
 ## 🏗️ System Architecture & Data Flow
 
@@ -55,7 +58,7 @@ MQTT Broker
 ↓  
 Web dashboard (HTTP) + Discord alert notifications
 
-![Architecture](docs/architecture_diagram.png)
+![Architecture](docs/IoT-architecture-diagram.png)
 
 ---
 
