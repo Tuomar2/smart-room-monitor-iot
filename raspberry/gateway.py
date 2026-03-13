@@ -4,7 +4,8 @@ import collections
 import requests
 import paho.mqtt.client as mqtt
 from bleak import BleakScanner, BleakClient
-
+import os
+from dotenv import load_dotenv
 # --- BLE Configuration ---
 DEVICE_NAME = "Nano333" # Vaihdettu "Nano33" jos se oli aiemmin skannerissa näkynyt nimi
 RX_UUID = "ed6629b5-3f81-4d4a-be67-e81d560fc69e" 
@@ -16,7 +17,11 @@ MQTT_PORT = 1883
 MQTT_TOPIC = "proto_assignment/group24/data"
 
 # --- Webhook Configuration ---
-WEBHOOK_URL = "os.getenv("DISCORD_WEBHOOK_URL")" 
+load_dotenv()
+WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
+
+if not WEBHOOK_URL:
+    raise ValueError("DISCORD_WEBHOOK_URL is not set")
 
 temp_history = collections.deque(maxlen=5) 
 
